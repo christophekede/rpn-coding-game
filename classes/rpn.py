@@ -21,12 +21,11 @@ class RPN:
 
     def calcul(self, ope):
         opes = {'+': operator.add, '-': operator.sub, '*': operator.mul, '/': operator.truediv}
-        print(self.stack)
         if(self.getLenStack() == 1):
             val = self.popStack()
             self.addValueStack(opes[ope](val, val))
         if(self.getLenStack() > 1):
             val1, val2 = self.popStack(), self.popStack()
             self.addValueStack(opes[ope](val2, val1))
-        print(self.stack)
+    
         
