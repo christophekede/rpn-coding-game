@@ -1,0 +1,253 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "RPN api",
+      "version": "1.0.0",
+      "title": "RPN API"
+      
+    },
+    "tags": [
+      {
+        "name": "rpn",
+        "description": "RPN Api"
+      }
+    ],
+     "servers": [
+          {
+          "url": "/"
+          }
+      ],
+         "components": {
+          "schemas": {
+              "TodoList": {
+                  "type": "object",
+                  "properties": {
+                      "name": {
+                      "type": "string"
+                      },
+                      "description": {
+                      "type": "string"
+                      }
+                  }
+              },
+              "stack_id":{
+              "type" : "integer",
+              
+              "properties" : {
+                  "name" : {
+                      "type" : "integer"
+                      
+                  }
+              }
+          },
+          "operand":{
+            "type" : "string",
+            
+            "properties" : {
+                "name" : {
+                    "type" : "string"
+                    
+                }
+            }
+        },
+          "value":{
+            "type" : "object",
+            "properties" : {
+                "valueS" : {
+                    "type" : "integer",
+                    "example":1
+                },
+                "value" : {
+                    "type" : "integer",
+                    "example":1
+                }
+            },
+            "example":1
+        }
+    
+          }
+      },
+       "paths": {
+          "/rpn/op": {
+              "get" :{
+                  "summary": "List all the operand",
+                  "operationId":"getOp",
+                 
+                  "responses": {
+                  "200": {
+                      "description": "OK"
+                     
+                  },
+                  "404": {
+                      "description": "NOT FOUND"
+                     
+              }
+              }
+              }
+          },
+          "/rpn/op/{op}/stack/{stack_id}":{
+            "post": {
+        
+                "operationId":"operand",
+                "parameters": [{
+                    "name": "stack_id",
+                    "in": "path",
+                    "description": "stack id to delete",
+                    "required": true,
+                    "schema" : {
+                        "$ref": "#/components/schemas/stack_id"
+                    }
+                },
+                {
+                    "name": "op",
+                    "in": "path",
+                    "description": "operand to apply: +,-,*,/",
+                    "required": true,
+                    "schema" : {
+                        "$ref": "#/components/schemas/operand"
+                    }
+                }
+            ],
+           
+                "summary": "Apply an operand to a stack",
+                
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                       
+                }
+                }
+            }
+          },
+          "/rpn/stack":{
+  
+              "post" :{
+               
+                  "operationId":"postStack",
+                  "summary": "Create a new stack",
+                  "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "404": {
+                      "description": "NOT FOUND"
+                      
+              }
+              }
+              },
+             
+              "get": {
+                          
+              "summary": "List all available stacks",
+              "operationId":"getStacks",
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "404": {
+                      "description": "NOT FOUND"
+                     
+              }
+              }
+          }
+         
+          },
+          "/rpn/stack/{stack_id}":{
+      
+            "delete": {
+        
+                "operationId":"deleteStack",
+                "parameters": [{
+                    "name": "stack_id",
+                    "in": "path",
+                    "description": "stack id to delete",
+                    "required": true,
+                    
+                    "schema" : {
+                        "$ref": "#/components/schemas/stack_id"
+                    }
+                }],
+                "summary": "Delete a stack",
+                
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                   }
+                }
+            },
+            "post": {
+        
+                "operationId":"addStack",
+                "parameters": [{
+                    "name": "stack_id",
+                    "in": "path",
+                    "description": "stack id to delete",
+                    "required": true,
+                    "schema" : {
+                        "$ref": "#/components/schemas/stack_id"
+                    }
+                }],
+                "requestBody": {
+                    "description": "Post New todo To Database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/value"
+                            },
+                         
+                         "example":{
+                            "value":1
+                         }
+                        
+                        }
+                    }
+                },
+                "summary": "Push a new value to a stack",
+                
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                       
+                }
+                }
+            },
+            
+            "get": {
+        
+                "operationId":"getStackById",
+                "parameters": [{
+                    "name": "stack_id",
+                    "in": "path",
+                    "description": "stack id to delete",
+                    "required": true,
+                    
+                    "schema" : {
+                        "$ref": "#/components/schemas/stack_id"
+                    }
+                }],
+                "summary": "Get a stack",
+                
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                      
+                    },
+                    "404": {
+                        "description": "NOT FOUND"
+                       
+                }
+            }
+        }
+    }
+  }
+  }
